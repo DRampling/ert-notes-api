@@ -1,14 +1,20 @@
-require("dotenv").config();
+const env = require("dotenv");
 const cors = require("cors");
 const express = require("express");
 const morgan = require("morgan");
+const passport = require("passport");
 
 const { debug } = require("./helpers/debug");
 const routes = require("./api/1.0/routes");
-const { connectToDB } = require("./api/1.0/models/connection");
+const { connectToDB, jwt } = require("./api/1.0");
+
+// Setup env vars and passport strategy
+env.config();
+jwt(passport);
 
 // Setup server
 const app = express();
+app.use(passport.initialize());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
