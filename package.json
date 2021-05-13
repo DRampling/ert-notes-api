@@ -15,11 +15,12 @@
     "passport-local": "^1.0.0"
   },
   "scripts": {
+    "generate-certificates": "node scripts/generateKeyPair.js",
+    "generate-salt-and-hash": "node scripts/generateSaltAndHash.js --password",
     "start": "nodemon src/server.js",
     "test": "jest --coverage",
     "test-coverage": "jest --coverage --coverageDirectory='coverage'",
-    "test-dev": "jest --watchAll",
-    "generate-certificates": "node scripts/generateKeyPair.js"
+    "test-dev": "jest --watchAll"
   },
   "devDependencies": {
     "eslint": "^7.2.0",
