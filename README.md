@@ -14,6 +14,7 @@ For a fresh install:
 - Clone the project: `git clone https://github.com/DRampling/ert-notes-api.git`<br>
 - Install dependencies: `cd ert-notes-api && npm install`<br>
 - Generate keys: `npm run generate-certificates`<br>
+- Create an .env file and populate it with the required details.
 - Start the project: `npm run start`
 
 ## Tests
