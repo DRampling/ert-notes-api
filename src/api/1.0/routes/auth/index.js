@@ -1,8 +1,11 @@
 const router = require("express").Router();
+// const passport = require("passport");
 
 const { errors } = require("../../constants");
 const { getDB, findOne } = require("../../models");
 const { validPassword, createJWT } = require("../../../../helpers");
+
+// Protect routes with passport.authenticate("jwt", { session: false }),
 
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
