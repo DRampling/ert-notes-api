@@ -1,7 +1,6 @@
 const router = require("express").Router();
-const passport = require("passport");
 
-const { errors, local } = require("../../constants");
+const { errors } = require("../../constants");
 const { getDB, findOne } = require("../../models");
 const { validPassword, createJWT } = require("../../../../helpers");
 
@@ -18,14 +17,17 @@ router.post("/login", async (req, res) => {
 
   // Check account exists
   const account = await findOne(client, "accounts", "username", username);
-  if (!account) res.status(401).json(errors[noAccount]);
+  if (!account) return res.status(401).json(errors[noAccount]);
 
   // Check password is valid
   const isValid = validPassword(password, account.hash, account.salt);
-  if (!isValid) res.status(401).json(errors[invalidPassword]);
+  if (!isValid) return res.status(401).json(errors[invalidPassword]);
 
   // Create token and sign it
   const token = createJWT(account);
+  return res
+    .status(200)
+    .json({ state: "login successful", data: { token, code: "200" } });
 });
 
 module.exports = router;
