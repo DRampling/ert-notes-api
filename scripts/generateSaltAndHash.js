@@ -1,7 +1,7 @@
 const crypto = require("crypto");
 
 // Generate salt and hash from provided password
-const genPassword = () => {
+const generateSaltAndHash = () => {
   const password = process.argv[3];
   // Check password exists
   if (!password || typeof password !== "string") {
@@ -18,4 +18,4 @@ const genPassword = () => {
   console.log(`\x1b[35m%s\x1b[0m`, `HASH: ${hash.toString("hex")}`);
 };
 
-genPassword();
+generateSaltAndHash();
