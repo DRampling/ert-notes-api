@@ -1,9 +1,7 @@
 const path = require("path");
-const bcrypt = require("bcrypt");
 const jwtStrategy = require("passport-jwt").Strategy;
 const extractJwt = require("passport-jwt").ExtractJwt;
 const fs = require("fs");
-const localStrategy = require("passport-local").Strategy;
 const objectID = require("mongodb").ObjectID;
 
 const pathToKey = path.join(__dirname, "../../../../", "rsa_pub.pem");
@@ -35,25 +33,4 @@ const jwt = (passport) => {
   );
 };
 
-// Confirm account exists and password is valid
-const local = new localStrategy(
-  { usernameField: "username", passwordField: "password" },
-  async (username, password, done) => {
-    try {
-      // Check account exists
-      const account = await findOne(client, "accounts", "username", username);
-      if (!account) return done(null, false, errors["noAccount"]);
-
-      // Check password is valid
-      const isPasswordValid = await bcrypt.compare(password, account.password);
-      if (!isPasswordValid) return done(null, false, errors["invalidPassword"]);
-
-      const success = { state: "login successful", data: { code: "201" } };
-      return done(null, account, success);
-    } catch (error) {
-      return done(error);
-    }
-  }
-);
-
-module.exports = { local, jwt };
+module.exports = { jwt };
