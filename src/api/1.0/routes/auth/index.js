@@ -3,6 +3,7 @@ const passport = require("passport");
 
 const { errors, local } = require("../../constants");
 const { getDB, findOne } = require("../../models");
+const { validPassword, createJWT } = require("../../../../helpers");
 
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
@@ -19,10 +20,12 @@ router.post("/login", async (req, res) => {
   const account = await findOne(client, "accounts", "username", username);
   if (!account) res.status(401).json(errors[noAccount]);
 
-  // Validate password
-  const isValid = utils.validPassword(req.body.password, user.hash, user.salt);
+  // Check password is valid
+  const isValid = validPassword(password, account.hash, account.salt);
+  if (!isValid) res.status(401).json(errors[invalidPassword]);
 
-  // Create token from user id and sign it
+  // Create token and sign it
+  const token = createJWT(account);
 });
 
 module.exports = router;
