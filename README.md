@@ -9,18 +9,24 @@ Project was created using versions:
 - Node: v14.16.1
 - Npm: 6.14.12
 
-Clone the project: `git clone https://github.com/DRampling/ert-notes-api.git`<br>
-Install dependencies: `cd ert-notes-api && npm install`<br>
-Generate keys: `npm run generate-certificates`<br>
-Start the project: `npm run start`
+For a fresh install:
+
+- Clone the project: `git clone https://github.com/DRampling/ert-notes-api.git`<br>
+- Install dependencies: `cd ert-notes-api && npm install`<br>
+- Generate keys: `npm run generate-certificates`<br>
+- Start the project: `npm run start`
 
 ## Tests
 
-Tests can be run once with coverage: `npm run test`<br>
-Tests can be run every change: `npm run test-dev`<br>
-Generate coverage report: `npm run test-coverage`
+There are various scripts to cover testing and coverage:
+
+- Tests can be run once with coverage: `npm run test`<br>
+- Tests can be run with every change: `npm run test-dev`<br>
+- Coverage report files can be generated: `npm run test-coverage`
 
 ## Scripts
 
-`generateKeyPair` can be used to generate a pair of certificates required for JWT validation: `npm run generate-certificates`<br>
-`generateSaltAndHash` can be used to generate a random salt and hash for the provided password: `npm run generate-salt-and-hash <my_password>`
+There are various scripts to assist setup:
+
+- **generateKeyPair.js** can be used to generate a pair of certificates required for JWT validation:<br> `npm run generate-certificates`
+- **generateSaltAndHash.js** can be used to generate a random salt and hash for the provided password:<br> `npm run generate-salt-and-hash <my_password>`
