@@ -2,7 +2,7 @@ const router = require("express").Router();
 const passport = require("passport");
 
 const { errors, local } = require("../../constants");
-const { getDB } = require("../../models");
+const { getDB, findOne } = require("../../models");
 
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
@@ -15,7 +15,12 @@ router.post("/login", async (req, res) => {
   if (!username) return res.status(400).json(errors[noUsername]);
   if (!password) return res.status(400).json(errors[noPassword]);
 
-  passport.use("login", local);
+  // Check account exists
+  const account = await findOne(client, "accounts", "username", username);
+  if (!account) res.status(401).json(errors[noAccount]);
+
+  // Validate password
+  const isValid = utils.validPassword(req.body.password, user.hash, user.salt);
 
   // Create token from user id and sign it
 });

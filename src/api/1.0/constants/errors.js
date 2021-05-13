@@ -1,7 +1,7 @@
 // Collection of error responses
 const errors = {
   noAccount: {
-    state: "reporting error",
+    state: "login unsuccessful",
     data: { message: "invalid credentials", code: "401" },
   },
   noDatabase: {
@@ -17,7 +17,7 @@ const errors = {
     data: { message: "password must be provided", code: "400" },
   },
   invalidPassword: {
-    state: "reporting error",
+    state: "login unsuccessful",
     data: { message: "invalid credentials", code: "401" },
   },
 };
