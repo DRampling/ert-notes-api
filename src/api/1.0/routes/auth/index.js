@@ -1,5 +1,7 @@
 const router = require("express").Router();
+const passport = require("passport");
 
+const { errors, local } = require("../../constants");
 const { getDB } = require("../../models");
 
 router.post("/login", async (req, res) => {
@@ -7,30 +9,15 @@ router.post("/login", async (req, res) => {
   const { client, db } = getDB();
 
   // Check database client is connected
-  if (!client || !db)
-    return res.status(500).json({
-      state: "reporting error",
-      data: { message: "database is offline", code: "500" },
-    });
+  if (!client || !db) return res.status(500).json(errors[noDatabase]);
 
-  // Check username is present
-  if (!username)
-    return res.status(422).json({
-      state: "reporting error",
-      data: { message: "username must be provided", code: "422" },
-    });
+  // Check username and password is present
+  if (!username) return res.status(400).json(errors[noUsername]);
+  if (!password) return res.status(400).json(errors[noPassword]);
 
-  // Check password is present
-  if (!password)
-    return res.status(422).json({
-      state: "reporting error",
-      data: { message: "password must be provided", code: "422" },
-    });
+  passport.use("login", local);
 
-  res.status(201).json({
-    state: "login successful",
-    data: {},
-  });
+  // Create token from user id and sign it
 });
 
 module.exports = router;

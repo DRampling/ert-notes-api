@@ -9,6 +9,8 @@ const { connectToDB } = require("./api/1.0/models/connection");
 
 // Setup server
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
