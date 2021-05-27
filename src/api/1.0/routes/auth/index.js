@@ -32,6 +32,19 @@ router.post("/login", async (req, res) => {
 
   // Create token and sign it
   const token = createJWT(account);
+  const [header, payload, signature] = token.split(".");
+  const readable = [header, payload, ""].join(".");
+
+  // Attach access cookies
+  const options = {
+    domain: process.env.DOMAIN,
+    maxAge: process.env.EXPIRY_MINS * 60 * 1000,
+    sameSite: "strict",
+    secure: true,
+  };
+  res.cookie("ert_notes_acc", readable, { ...options, httpOnly: false });
+  res.cookie("ert_notes_acc_sig", signature, { ...options, httpOnly: true });
+
   return res
     .status(200)
     .json({ state: "login successful", data: { token, code: "200" } });

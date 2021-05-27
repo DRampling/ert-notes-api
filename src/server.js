@@ -25,7 +25,7 @@ app.on("Database connected", () => {
   // Setup routes
   app.use(routes);
 
-  const server = app.listen(3000, () => {
+  const server = app.listen(3001, () => {
     const port = server.address().port;
     debug(`Server started on port ${port}`);
   });
