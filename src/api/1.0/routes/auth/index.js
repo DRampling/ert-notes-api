@@ -39,7 +39,7 @@ router.post("/login", async (req, res) => {
   const options = {
     domain: process.env.DOMAIN,
     maxAge: process.env.EXPIRY_MINS * 60 * 1000,
-    sameSite: "strict",
+    sameSite: "Strict",
     secure: true,
   };
   res.cookie("ert_notes_acc", readable, { ...options, httpOnly: false });

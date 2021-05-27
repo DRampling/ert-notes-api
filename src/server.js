@@ -1,12 +1,13 @@
 require("dotenv").config();
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const express = require("express");
 const morgan = require("morgan");
 const passport = require("passport");
 
-const { debug } = require("./helpers/debug");
 const routes = require("./api/1.0/routes");
 const { connectToDB, jwt } = require("./api/1.0");
+const { debug } = require("./helpers/debug");
 
 // Setup database connection
 const app = express();
@@ -19,6 +20,7 @@ app.on("Database connected", () => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
   app.use(cors());
+  app.use(cookieParser(process.env.COOKIE_SECRET));
   app.use(morgan("dev"));
   app.use(express.json());
 
