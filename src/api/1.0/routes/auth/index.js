@@ -47,7 +47,7 @@ router.post("/login", async (req, res) => {
 
   return res
     .status(200)
-    .json({ state: "login successful", data: { er code: "200" } });
+    .json({ state: "login successful", data: { code: "200" } });
 });
 
 module.exports = router;
