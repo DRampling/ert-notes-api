@@ -99,16 +99,20 @@ describe("login routes", () => {
     });
 
     test("can handle valid credentials and generate a JWT", async () => {
-      const { statusCode, body } = await request(app)
+      const { statusCode, body, header } = await request(app)
         .post("/api/1.0/auth/login")
         .send({ username: "guest", password: "guest" });
-      const response = {
-        state: "login successful",
-        data: { code: "200", token: expect.any(String) },
-      };
+      const response = { state: "login successful", data: { code: "200" } };
 
       expect(statusCode).toEqual(200);
       expect(body).toEqual(response);
+      expect(header["set-cookie"].length).toEqual(2);
+      expect(
+        header["set-cookie"][0].startsWith("ert_notes_acc=Bearer%20")
+      ).toEqual(true);
+      expect(header["set-cookie"][1].startsWith("ert_notes_acc_sig=")).toEqual(
+        true
+      );
     });
 
     test("can handle no database connection", async () => {
